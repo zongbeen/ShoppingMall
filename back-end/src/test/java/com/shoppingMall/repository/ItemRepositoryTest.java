@@ -1,11 +1,17 @@
 package com.shoppingMall.repository;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shoppingMall.constant.ItemSellStatus;
 import com.shoppingMall.entity.Item;
+import com.shoppingMall.entity.QItem;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.query.JpaQueryMethodFactory;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
@@ -18,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 // application-test.properties에 같은 설정이 있다면 더 높은 우선순위 부여
 @TestPropertySource(locations = "classpath:application-test.properties")
 class ItemRepositoryTest {
+    @PersistenceContext
+    EntityManager em;
+
     @Autowired
     ItemRepository itemRepository; //Autowired 이용하여 Bean을 주입하고 ItemRepository를 사용
 
@@ -111,4 +120,19 @@ class ItemRepositoryTest {
 //        }
 //    }
 
+    @Test
+    @DisplayName("Querydsl 조회 테스트1")
+    public void queryItemTest(){
+        this.createItemList();
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QItem qItem = QItem.item;
+        JPAQuery<Item> query = queryFactory.selectFrom(qItem)
+                .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
+                .where(qItem.itemDetail.like("%" + "테스트 상품 설명" + "%"))
+                .orderBy(qItem.price.desc());
+        List<Item> itemList = query.fetch();
+        for(Item item : itemList) {
+            System.out.println(item.toString());
+        }
+    }
 }
