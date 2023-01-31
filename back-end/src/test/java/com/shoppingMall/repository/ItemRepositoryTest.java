@@ -1,7 +1,7 @@
 package com.shoppingMall.repository;
 
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+//import com.querydsl.jpa.impl.JPAQuery;
+//import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shoppingMall.constant.ItemSellStatus;
 import com.shoppingMall.entity.Item;
 //import com.shoppingMall.entity.QItem;
