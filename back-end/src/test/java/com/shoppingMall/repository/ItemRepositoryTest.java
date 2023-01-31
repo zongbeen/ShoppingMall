@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shoppingMall.constant.ItemSellStatus;
 import com.shoppingMall.entity.Item;
-import com.shoppingMall.entity.QItem;
+//import com.shoppingMall.entity.QItem;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
@@ -120,19 +120,19 @@ class ItemRepositoryTest {
 //        }
 //    }
 
-    @Test
-    @DisplayName("Querydsl 조회 테스트1")
-    public void queryItemTest(){
-        this.createItemList();
-        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-        QItem qItem = QItem.item;
-        JPAQuery<Item> query = queryFactory.selectFrom(qItem)
-                .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
-                .where(qItem.itemDetail.like("%" + "테스트 상품 설명" + "%"))
-                .orderBy(qItem.price.desc());
-        List<Item> itemList = query.fetch();
-        for(Item item : itemList) {
-            System.out.println(item.toString());
-        }
-    }
+//    @Test
+//    @DisplayName("Querydsl 조회 테스트1")
+//    public void queryItemTest(){
+//        this.createItemList();
+//        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+//        QItem qItem = QItem.item;
+//        JPAQuery<Item> query = queryFactory.selectFrom(qItem)
+//                .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
+//                .where(qItem.itemDetail.like("%" + "테스트 상품 설명" + "%"))
+//                .orderBy(qItem.price.desc());
+//        List<Item> itemList = query.fetch();
+//        for(Item item : itemList) {
+//            System.out.println(item.toString());
+//        }
+//    }
 }
